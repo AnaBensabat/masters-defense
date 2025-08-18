@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Thesis Defense - Ana Bensabat Paulino</title>
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/anatheme.css" />    
+  </head>
+
+  
+  <body>
+
+    <div class="reveal">
+      <div class="slides">
+
+
+	
+	<!-- Title Slide -->
+	<section style="height: 100%; width: 100%; margin-top: 3%;" id="title-slide"  data-background-image="media/cover.jpg" data-background-size="1950px">
+	  <div id="content" >
+	    
+            <div style="margin-top: 8%;" >
+              <p style="font-size:2em;
+			margin:1em">Ana Bensabat Paulino</p>
+              <h3>Modelling Cell Deformation Dynamics Using Phase-Field and Molecular Dynamics Methods</h3>
+              <p style="font-size:1.2em;
+			margin:1em;
+			margin-left:5em;
+			margin-right:5em;">Thesis submitted to the University of Coimbra in fulfillment of the requirements for the Master's Degree in Physics under the scientific supervision of Professor Rui Davide Martins Travasso, Professor Marcos João do Carmo Gouveia and Professor Giuseppe Negro.</p>
+            </div>
+	    
+	    <img style="bottom: 2%;
+			width: 20%;
+			margin: 0%;" data-src="media/uc_logo.png" />
+              <p style="font-size:1.2em">July of 2025</p>
+	    <p style="font-size:0.5em;
+		      color:white;
+		      position:absolute;
+		      right:-1.5%;
+		      bottom:2.5%;
+		      ">Figure adapted from: Angiex, Inc.</p>
+	      
+	  </div>	  
+	</section>        
+
+	<!-- Slide 1 -->
+	<section style="height: 100%; margin-top: 0%;">
+	  <h4>Cell Deformation</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    white-space: pre-line;" align="center">Cell deformation is essential to a variety of biological processes.
+	    Irregularities in cell deformation and shape can lead to illness and disease [1].</p>
+
+	  <div style="margin-top: 1%;
+		      display: flex;
+		      font-size:1.05em;">
+
+	    <div class="fragment fade-in-then-out" style="width:55%;
+							  position: absolute;
+							  margin-top:7%">
+		<img style="width=100%" data-src="media/slide-1-0.svg"/>	   
+	    </div>
+
+	    <div class="fragment fade-in-then-out" style="width:55%;
+							  position: absolute;
+							  margin-top:7%">
+		<img style="width=100%" data-src="media/slide-1-1.svg"/>	   
+	    </div>
+	    
+	    <div class="fragment fade-in" style="width:55%;
+						 position: absolute;
+						 margin-top:7%">
+		<img style="width=100%" data-src="media/slide-1-2.svg"/>	   
+	    </div>
+	    
+	    <div class="fragment fade-in" style="width:40%;
+						 margin:2%;
+						 position: absolute;
+						 left:55%;
+						 font-size:1.15em;">
+	      <p class="fragment" style="margin-top:5%;
+					 text-align:left;">
+		Cells deform in response to:</p>
+
+	      
+	      <ul style="margin-top:5%;">
+		<li class="fragment"> External and internal <b>mechanical</b> cues
+		<li class="fragment"> External and internal <b>biochemical</b> cues
+	      </ul>
+
+	      
+	      <p class="fragment" style="margin-top:2em;
+					 text-align:left;">
+		Cells deformation is essential for:</p>
+		<ul style="margin-top:5%;">
+		  <li class="fragment"> migration
+		  <li class="fragment"> division
+		  <li class="fragment"> differentiation
+		  <!-- <li class="fragment" style="white-space: pre-line;"> mechanotransduction -->
+		  <!--   (mechanical → biochemical signal conversion and genetic transcription) -->
+		  <li class="fragment"> migration, invasion and metastasis of cancerous cells
+		</ul>
+	       
+	    </div>
+	  </div>
+	
+	  <!-- References -->
+	  <ref> [1] B. Alberts, <i>et al</i>. "Molecular Biology of the cell: seventh international student edition with registration card" WW Norton & Company, 2022. Chap. 10, 16</ref>
+
+	</section>
+
+		<!-- Slide 2 -->
+	<section style="height: 100%; margin-top: 0%;">
+	  <h4>Cell Membrane and Cytoskeleton</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Cell deformation is due to the action of both the <b>cell membrane</b> and the <b>cell cytoskeleton</b> [1].</p>
+
+	  <div style="margin: 1%;  margin-left:2.5%; display: flex; font-size:1.1em;">
+	    <div class="fragment" style="width:70%;">
+	      <img class="zoomR" style="width: 80%;" data-src="media/slide2-left.svg"/>
+	      <p class="fragment" style="white-space: pre-line;
+					 text-align:left;">The cell membrane is a complex and dynamic environment. It possesses proteins that:
+	      <ul>
+		<li class="fragment">serve as receptors</li>
+		<!-- <li class="fragment">mediate transfer of chemicals and ions</li> -->
+		<li class="fragment">connect to the cytoskeleton</li>
+		<li class="fragment">mediate interactions with the environment</li>
+	      </ul>
+	      </p>
+	    </div>
+
+	    <div class="fragment" >
+	      <img style="width:370px" data-src="media/slide2-right.svg"/>
+	    </div>
+	    <div>
+	      <p class="fragment" style="
+					 text-align:left;">Actin Filaments
+	      <ul>
+		<!-- <li class="fragment">helicoidal and polar structure</li> -->
+		<li class="fragment">motion, contractility and mechanical resistance</li>
+		<!-- <li class="fragment">attach to focal adhesions</li> -->
+		<li class="fragment">give cells strength and shape</li>
+	      </ul>
+	      </p>
+	      
+	      <p class="fragment" style="margin-top:22%;
+					 text-align:left;">Microtubules
+	      <ul>
+		<!-- <li class="fragment">hollow cylindrical and polar structure</li> -->
+		<li class="fragment">provide strength and stability</li>
+		<li class="fragment">essential in cell division</li>
+		<li class="fragment">"cell railway": transport of organelles and other structures</li>
+	      </ul>
+	      </p>
+	      
+	      <p class="fragment" style="margin-top:20%;
+					 text-align:left;">Intermediate Filaments
+	      <ul>
+		<!-- <li class="fragment">apolar helicoidal structure</li> -->
+		<li class="fragment">provide structural integrity to the cell</li>
+		<li class="fragment">key in the response to mechanical stress, maintain cell shape and anchor organelles</li>
+	      </ul>
+	      </p>
+	    </div>
+	  </div>
+	  
+	  <!-- References -->
+	  <ref> [1] B. Alberts, <i>et al</i>. "Molecular Biology of the cell: seventh international student edition with registration card" WW Norton & Company, 2022. Chap. 10, 16</ref>
+	  
+	</section>
+
+	<!-- Slide 3 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">The Phase-Field Model</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Different domains in the system are indexed by an <b>order parameter</b>. The system is described by its <b>free energy</b> [2]. The interfaces in this model continuous interfaces.</p>
+
+	  <!-- <p style="position:absolute; -->
+	  <!-- 	    right:5%; -->
+	  <!-- 	    top:22%; -->
+	  <!-- 	    font-size:.95em; -->
+	  <!-- 	    color:grey">\[ -->
+	  <!--   \begin{align} -->
+	  <!--   V[\phi]=\int h(\phi)\text{d}\mathbf{r}\\ -->
+	  <!--   h(\phi) = \phi^2(3-2\phi) -->
+	  <!--   \end{align} -->
+	  <!--   \]</p> -->
+	  
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-0.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-1.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-2.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-3.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-4.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-5.svg"/>
+	  </div>
+	  <div class="fragment fade-in-then-out" style="margin-top: 5%;
+							  position: absolute;
+		      width:110%">
+	    <img data-src="media/slide-3-6.svg"/>
+	  </div>
+
+	  <!-- References -->
+	    <ref>[2] M. Moreira-Soares et al. “Adhesion modulates cell morphology and migration within dense fibrous networks”. In: J. Phys.: Condens. Matter 32.31 (July 2020)</ref>
+
+	</section>
+
+		<!-- Slide 5 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top: 0;">Nuclear deformations on microgroove substrates</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">The nucleus is the hub of gene expression. How can deformations affect it?</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+	    <img  class="fragment" style="width:35%;
+			 margin-top:3%;
+			 margin-left:2.5%;"data-src="media/slide-4.svg"/>	   
+	    <div style="margin-top:5%;
+			margin-left:8%;
+			width:50%;
+			text-align:left;
+			font-size: 1.2em;">
+	      <p class="fragment">
+		Alterations in the nuclear <b>mechanical properties</b> have been linked with different <b>pathologies</b> and <b>gene expression</b> of stem cells, leading to alterations in development and cell differentiation.
+	      </p>
+	      <div class="fragment fade-out" style="position: absolute;
+			  left:3%;
+			  top:20%;
+			  width: 40%;
+			  height: 80%;
+			  background-color: white; 
+			  "></div>
+	      <p style="margin-top: 5%">
+		<ul>
+		  <li class="fragment"> Leclech <i>et al.</i> studied nuclear deformation of endothelial cells on microgroove substrates.</li>
+		  <li class="fragment">Deformations lead to partial and complete nuclear <b>caging</b>.</li>
+		  <li class="fragment">Caging is driven by <b>adhesion without cytoskeleton-associated forces</b>.</li>
+		  <!-- <li class="fragment">Deeper and wider grooves promote caging.</li> -->
+		</ul>
+	      </p>
+	      <p class="fragment" style="margin-top:10%;
+					 text-align:center;
+					 font-size:1.1em">
+		<b>Goal:</b> Development of a multi-phase-field model that highlights <b>adhesion forces</b> and <b>relative nuclear stiffness</b> to support experimental findings and gain insight on nuclear deformation
+	      </p>
+	    </div>
+	  </div>
+
+	  
+	  <!-- References -->
+	  <ref> [3] C. Leclech et al. “Micro-Scale Topography Triggers Dynamic 3D Nuclear Deformations”. en. In: Advanced Science (Jan. 2025)</ref>
+
+	</section>
+
+	<!-- Slide 5 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top: 0;">Nuclear deformations on microgroove substrates</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">This system was simulated via a multi-phase-field model where the substrate, the nucleus and the cell are each described by a different field.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+	    <img class="fragment fade-in" style="width:35%;
+			position: absolute;
+			margin-top:3%;
+			margin-left:2.5%;"data-src="media/slide-5-0.svg"/>	   
+	    <div class="fragment fade-in" style="position:absolute;
+			left:32%;
+			margin-top:1%;
+			margin-left:8%;
+			width: 50%;
+			text-align:center;">
+	      The free energy now also features terms for the nucleus:
+
+	      <div style="position:absolute;
+			  left:5%;">
+	      \[ \begin{align*}
+	      \quad F[\phi,\nu,\psi] &= \int \kappa_\text{C}\left(\frac{\varepsilon}{2}|\nabla \phi|^2 + \frac{1}{4}\phi^2(1-\phi)^2\right)\text{d}\mathbf{r}\\
+              &+ \int \kappa_\text{N}\left(\frac{\varepsilon}{2}|\nabla \nu|^2 + \frac{1}{4}\nu^2(1-\nu)^2\right)\text{d}\mathbf{r}\\
+              &+ \int \eta\left( \nabla h(\phi)\cdot\nabla h(\psi) \right)\text{d}\mathbf{r}\\
+              &+ \int \gamma\left( h(\phi)\cdot h(\psi) +  h(1-\phi)\cdot h(\nu)\right)\text{d}\mathbf{r} \\
+              &+ \alpha_V (V_\text{target,C}-V[\phi])^2 + \alpha_V (V_\text{target,N}-V[\nu])^2\\
+	      \end{align*}
+	      \]
+	      </div>
+
+	      <div class="fragment">
+		<div class="dashed-rectangle" style="position:absolute;
+						     margin-left:31%;
+						     margin-top:15%;
+						     height:220%;
+						     width:60%;
+						     ">
+		</div>
+		<div class="dashed-rectangle" style="position:absolute;
+						     margin-left:64%;
+						     margin-top:37%;
+						     height:160%;
+						     width:28%;
+						     ">
+		</div>
+		<div class="dashed-rectangle" style="position:absolute;
+						     margin-left:72%;
+						     margin-top:45%;
+						     height:155%;
+						     width:37%;
+						     ">
+		</div>
+	      </div>
+
+	    </div>
+	    
+	      <div class="fragment fade-out" style="position: absolute;
+			  left:3%;
+			  top:70%;
+			  width: 40%;
+			  height: 40%;
+			  background-color: white; 
+			  "></div>
+	    <div class="fragment" style="position:absolute;
+					 left:32%;
+					 top:60%;
+			margin-top:5%;
+			margin-left:8%;">The equation of motion fatures a novel term that <b>maintains cell integrity</b>:
+	      <p style="font-size:0.9em">\[
+	      \begin{align*}
+	      g[\phi]=-\chi\phi(1-\phi)\int_\mathcal{S}  \Theta(-\nabla \phi(\mathbf{r})\cdot\nabla\phi(\mathbf{r}')) (\nabla \phi(\mathbf{r})\cdot \nabla \phi(\mathbf{r}'))e^{-|\mathbf{r}-\mathbf{r}'|/\delta}\text{d}\mathbf{r}'
+	      \end{align*} \]</p>
+	    <img data-src="media/slide-5-term.svg"/>	   
+	    </div>
+	    <img class="fragment"
+		 style="width:35%;
+			position: absolute;
+			margin-top:3%;
+			margin-left:2.5%;" data-src="media/slide-5-1.svg"/>	   
+	  </div>
+
+	  <div class="fragment">
+	      <div class="transparent-square"></div>
+	  </div>
+	  
+	  <video class="fragment" style="" height="500px" controls="true">
+	    <source src="media/hill.mp4" type="video/mp4" >
+	    <!-- <source src="media/valley.mp4" type="video/mp4" > -->
+	  </video>
+	  
+	  <!-- References -->
+	  <ref></ref>
+	</section>
+
+	
+
+	<!-- Slide 6 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top: 0;">Nuclear deformations on microgroove substrates</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">The influence of nucleus stiffness and cell-substrate adhesion in caging.</p>
+	  
+	  <div style="margin-top: 1%;">
+	    <img width="75%" data-src="media/slide-6.svg"/>	   	 
+	  </div>
+	  
+	  <p style="color:gray;
+		    position:absolute;
+		    left:2%;
+		    bottom:3%;
+		    font-size:0.9em">
+	    Nondimensional coefficients:
+	    \[
+	    \text{A} \equiv \kappa_\text{N} / \kappa_\text{RBC}
+	    \]
+	    \[
+	    \text{B} \equiv \eta / \kappa_\text{RBC} \varepsilon^2\]
+	  </p>
+
+	  <div class="fragment">
+	    <div class="transparent-square"></div>
+	    
+	      <div style="border:3px solid black;
+			  position:absolute;
+			  width:75%;
+			  left:12.5%;
+			  top:25%;
+			  font-size:2.5em;
+			  background-color: #c5a584; 
+			  opacity: 0.90;">
+		<p style="text-align:center;"><b>CONCLUSIONS</b></p>
+		<ul style="font-size:.75em;
+			   margin-bottom:3%;">
+		  <li>Adhesion is the main driver of nuclear caging</li>
+		  <li>The degree of caging is influenced by the initial conditions and relative nuclear stiffness</li>
+		</ul>
+	  </div>
+	  
+	  </div>
+	  
+	  <!-- References -->
+	  <ref></ref>
+	</section>
+	
+
+	<!-- <\!-- Slide 7 -\-> -->
+	<!-- <section style="height: 100%; margin-top: 0%;" > -->
+	<!--   <h4 style="top: 0;">Nuclear deformations on microgroove substrates</h4> -->
+	<!--   <p style="margin:0.5em; -->
+	<!-- 	    font-size:1.3em;" align="center">Influence of groove depth on caging.</p> -->
+
+	<!--   <img style="margin-top:7%;" data-src="media/slide-7.svg"/>	    -->
+	  
+	<!--   <\!-- References -\-> -->
+	<!--   <ref> [3] C. Leclech et al. “Micro-Scale Topography Triggers Dynamic 3D Nuclear Deformations”. en. In: Advanced Science (Jan. 2025)</ref> -->
+
+	<!-- </section> -->
+
+	<!-- <\!-- Slide 8 -\-> -->
+	<!-- <section style="height: 100%; margin-top: 0%;" > -->
+	<!--   <h4 style="top: 0;">Nuclear deformations on microgroove substrates</h4> -->
+	<!--   <p style="margin:0.5em; -->
+	<!-- 	    font-size:1.3em;" align="center">Influence of groove width on caging.</p> -->
+
+	<!--   <img style="margin-top:10%;" data-src="media/slide-8.svg"/> -->
+	  
+	<!--   <\!-- References -\-> -->
+	<!--   <ref> [3] C. Leclech et al. “Micro-Scale Topography Triggers Dynamic 3D Nuclear Deformations”. en. In: Advanced Science (Jan. 2025)</ref> -->
+
+	<!-- </section> -->
+
+		<!-- Slide 9 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Modelling the malaria parasite pitting</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;" align="center">During a key stage of its life cycle, the malaria parasite develops inside human red blood cells (RBC). The human spleen is capable of mechanically extracting the parasites in a process generally called <b>pitting</b> [4]].</p>
+	  
+	  <div style="margin-top: 1%;
+		      display: flex;">
+	    <div style="margin-left: 2.5%;
+			margin-right: 2.5%;
+			width: 50%;">
+	      <img class="zoomR" width="90%" style="margin-top:10%;"
+		   data-src="media/slide-9.svg"/>
+	      <video style="margin-top:5%;" width="95%" controls="true" loop="true">
+		  <source src="media/pitting-fast.mp4" type="video/mp4" >
+		</video>
+	    </div>
+	    <div style="margin-left: 2.5%;
+			margin-right: 2.5%;
+			margin-top:5%;
+			width: 50%;" >
+	      <p class="fragment" style="margin-top:10%;
+						 text-align:left;
+						 font-size:1.1em">
+		To study the pitting <i>in vitro</i> A. Elizalde-Torrent <i>et al.</i> developed microfluidic devices that <b>mimick splenic filtration</b> and are able to remove <i>Plasmodium</i> parasite.
+	      </p>
+	      
+	      <div class="fragment fade-out" style="position: absolute;
+			  left:3%;
+			  top:50%;
+			  width: 60%;
+			  height: 40%;
+			  background-color: white; 
+			  "></div>
+
+	      <p class="fragment" style="margin-top:10%;
+						 text-align:left;
+						 font-size:1.1em">
+		The parasite can be removed solely by mechanical stress on the RBC, without affecting the cell integrity [5].
+	      </p>
+
+	      
+	      <p class="fragment" style="margin-top:20%;
+						 text-align:center;
+						 font-size:1.2em">
+		<b>Goal:</b> Development of a multi-phase-field model replicates and expands upon experimental conditions to find the <b>optimal conditions</b> for pitting.
+	      </p>
+
+	    </div>
+	  </div>
+	  	  
+	  <!-- References -->
+	  <ref> [4] R. E. Mebius and G. Kraal. “Structure and function of the spleen”. In: Nature reviews immunology 5.8 (2005)
+	    [5] A. Elizalde-Torrent <i>et al.</i> “Pitting of malaria parasites in microfluidic devices mimicking spleen interendothelial slits”. In: Scientific reports 11.1 (2021)
+	  </ref>
+
+	</section>
+
+	<!-- Slide 10 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top: 0;">Modelling the malaria parasite pitting</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">This system was simulated via a multi-phase-field model where the channel, the parasite and the RBC are each described by a different field.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;
+		      font">
+	    <img class="fragment fade-in" style="width:35%;
+			position: absolute;
+			margin-top:3%;
+			margin-left:2.5%;"data-src="media/slide-10.svg"/>	   
+	    <div class="fragment fade-in" style="position:absolute;
+			left:32%;
+			margin-top:1%;
+			margin-left:8%;
+			width: 50%;
+			font-size: 1.1em;
+			text-align:center;
+			white-space: pre-line;">
+	      The free energy is analogous to that of the previous system:
+	      \[ \begin{align*}
+	      \quad F[\phi,\nu,\psi] &= \int \kappa_\text{RBC} \left(\frac{\varepsilon}{2}|\nabla \phi|^2 + \frac{1}{4}\phi^2(1-\phi)^2\right)\text{d}\mathbf{r}\\
+              &+ \int \kappa_\text{P} \left(\frac{\varepsilon}{2}|\nabla \nu|^2 + \frac{1}{4}\nu^2(1-\nu)^2\right)\text{d}\mathbf{r}\\
+              &+ \int \eta\left( \nabla h(\phi)\cdot\nabla h(\psi) \right)\text{d}\mathbf{r}\\
+              &+ \int \gamma\left( h(\phi)\cdot h(\psi) +  h(1-\phi)\cdot h(\nu)\right)\text{d}\mathbf{r} \\
+              &+ \alpha_V (V_\text{target,RBC}-V[\phi])^2 + \alpha_V (V_\text{target,P}-V[\nu])^2\\
+	      \end{align*}
+	      \]
+	      
+	      The equation of the evolution now features an <b>advection velocity</b> term:
+	      \[
+	      \begin{align*}
+	      \frac{\partial \phi}{\partial t} + \mathbf{v}\cdot \nabla \phi = -M\frac{\delta F[\phi]}{\delta \phi}
+	      \end{align*} \]
+	    </div>
+
+	    <div class="fragment">
+	      <div class="dashed-rectangle" style="position:absolute;
+						   margin-left:57.5%;
+						   margin-top:48%;
+						   height:5%;
+						   width:7%;
+						   ">
+		</div>
+
+	      <!-- <div class="dashed-rectangle" style="position:absolute; -->
+	      <!-- 					   margin-left:31%; -->
+	      <!-- 					   margin-top:15%; -->
+	      <!-- 					   height:220%; -->
+	      <!-- 					   width:60%; -->
+	      <!-- 					   "> -->
+	      <!-- </div> -->
+	      <!-- <div class="dashed-rectangle" style="position:absolute; -->
+	      <!-- 					   margin-left:64%; -->
+	      <!-- 					   margin-top:37%; -->
+	      <!-- 					   height:160%; -->
+	      <!-- 					   width:28%; -->
+	      <!-- 					   "> -->
+	      <!-- </div> -->
+	      <!-- <div class="dashed-rectangle" style="position:absolute; -->
+	      <!-- 					   margin-left:72%; -->
+	      <!-- 					   margin-top:45%; -->
+	      <!-- 					   height:155%; -->
+	      <!-- 					   width:37%; -->
+	      <!-- 					   "> -->
+	      <!-- </div> -->
+	    </div>
+
+	  </div>
+
+	  <!-- References -->
+	  <ref></ref>
+	</section>
+
+	<!-- Slide 11 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Modelling the malaria parasite pitting</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Influence of channel geometry (channel diameter) on the mechanical extraction of the parasite.</p>
+
+	  <div style="margin-top: 1%;display: flex;
+		    font-size:1.2em;">
+	    <div style="margin-left:10%;
+			margin-top:5%;
+			margin-right:10%;">$R_\text{channel} = 1 \mu m$</div>
+	    <div style="margin-left:3%;
+			margin-top:5%;
+			margin-right:10%;">$R_\text{channel} = 0.6 \mu m$</div>
+	    <div style="margin-left:3%;
+			margin-top:5%;
+			margin-right:10%;">$R_\text{channel} = 0.4 \mu m$</div>
+	  </div>
+	  <div style="margin-top: -2%;display: flex;">
+	  <video class="fragment" height="500px" controls="true">
+	    <!-- <source src="media/geo-malaria-smallcut.mp4" type="video/mp4" > -->
+	    <source src="media/geo-malaria-bigcut.mp4" type="video/mp4" >
+	  </video>
+	  </div>
+	  
+	  <!-- References -->
+	    <ref></ref>
+
+	</section>
+
+	<!-- Slide 12 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Modelling the malaria parasite pitting</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Influence of RBC-channel adhesion and parasite rigidity on pitting.</p>
+
+	  <div style="margin-top: 1%;display: flex;
+		      font-size:1.2em;">
+	    <img style="margin-left: 12%;
+			margin-top: 2.5%;
+			width: 70%" data-src="media/slide-12.svg"/>	   
+	  </div>
+	  <p style="color:gray;
+		    position:absolute;
+		    left:1%;
+		    bottom:1%;
+		    font-size:0.9em;
+		    white-space: pre-line;">
+	    Nondimensional
+	    coefficients:
+	    \[
+	    \begin{align}
+	    \text{A} \equiv \kappa_\text{P} / \kappa_\text{RBC} \\
+	    \text{B} \equiv \eta / \kappa_\text{RBC} \varepsilon^2
+	    \end{align}\]
+	  </p>
+
+	  <div class="fragment">
+	    <div class="transparent-square"></div>
+	    
+	    <div style="border:3px solid black;
+			position:absolute;
+			width:75%;
+			left:12.5%;
+			top:25%;
+			font-size:2.5em;
+			background-color: #c5a584; 
+			opacity: 0.90;">
+	      <p style="text-align:center;"><b>CONCLUSIONS</b></p>
+	      <ul style="font-size:.75em;
+			 margin-bottom:3%;">
+		<li>There is an optimal channel geometry for pitting</li>
+		<li>Critical velocity for pitting onset</li>
+		<li>RBC-channel adhesion inhibits pitting</li>
+		<li>Pitting is independent of parasite stiffness</li>
+	      </ul>
+	     </div>
+
+	  
+	  <!-- References -->
+	    <ref></ref>
+	</section>
+
+	<!-- Slide 13 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Multiscale model for the cytoskeleton</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">In the final project of this system, we studied a system of active Brownian particles (ABPs) coupled with a phase-field vesicle.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+
+	    <div class="fragment fade-in-then-out" style="width:50%;
+			position: absolute;
+			left:45%;
+			font-size:1.15em;">
+	      <p style="margin-top:5%;
+					 text-align:left;
+					 font-size:0.9em;">
+		The free energy is:
+		\[
+		F[\phi] = \int_V \left(\frac{\varepsilon}{2} (\nabla \phi)^2 + \frac{1}{4}\phi^2(1-\phi)^2\right) \text{d}\mathbf{r} + \alpha_V(V-V_\text{target})^2
+		\]
+		and the equation of motion is:
+		\[
+		\frac{\partial \phi}{\partial t} + \alpha_CC|\nabla\phi| + \phi(1-\phi)(\mathbf{u}\cdot \nabla \phi) = -M\frac{\delta F[\phi]}{\delta \phi}\]
+		where [6]:
+		\[C=-\nabla\cdot\frac{\nabla \phi}{|\nabla\phi|}.\]
+		and \[ \mathbf{u}(\mathbf{r}_i) = \sum_i^N A \mathbf{v}_i\int_C e^{-(\mathbf{r}'-\mathbf{r}_i)^2/\delta^2} \text{d}\mathbf{r}' \]
+	      </p>	      
+	    </div>
+
+	    	    <div class="fragment" style="width:50%;
+			position: absolute;
+			left:45%;
+			font-size:1.15em;">
+	      <p style="margin-top:5%;
+					 text-align:left;
+					 font-size:0.9em;">
+		The particles are modeled by a Langevin equation:
+		\[
+		m\ddot{\mathbf{r}}_i = -\alpha \mathbf{\dot{r}}_i - \sum_{i\neq j} \nabla U(|\mathbf{r}_i-\mathbf{r}_j|) + \mathbf{F}_{a,i} + \mathbf{F}_{m,i} + \xi_i
+		\] where the repulsion at the membrane is given by:
+		\[
+		F_\text{m,i}=\frac{F}{h(\phi)}\nabla\phi(\mathbf{r}_i)
+		\]
+		The active force is modeled as:
+		\[
+		\mathbf{F}_\text{a,i} = f_p \mathbf{e}_i
+		\]
+		where [7]:
+		\[
+		\begin{gather}
+		\dot{\theta_i} = D_r\cot\theta_i + \eta_{\theta_i} \\
+		\dot{\varphi_i} = \frac{1}{\sin\theta_i}\eta_{\varphi_i}
+		\end{gather}
+		    \]
+		    and
+		\[
+		\begin{gather}
+		\left<\eta_\xi(t)\right> = 0 \\
+		\left<\eta_\xi(t)\eta_{\xi\prime}(t\prime)\right> = 2D_r\delta_{\xi\xi\prime}\delta(t-t\prime)
+		\end{gather}
+		    \]
+	      </p>
+
+	      
+	    </div>
+
+
+	    
+	    <div style="width:45%;
+						 position: absolute;
+						 left:-2%;
+							  margin-top:4%">
+	      
+		<img class="zoomR" style="width=100%" data-src="media/slide-13.svg"/>	   
+	    </div>
+
+	    
+	  </div>
+	  
+	  <!-- References -->
+	  <ref>[6] T. Biben, K. Kassner, and C. Misbah. “Phase-field approach to three-dimensional vesicle dynamics”. In: Physical Review E 72.4 (2005)
+	  [7] M. Raible and A. Engel. “Langevin equation for the rotation of a magnetic particle”. In: Applied organometallic chemistry 18.10 (2004)</ref>
+
+	</section>
+
+	<!-- Slide 14 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Multiscale model for the cytoskeleton</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">A study of the dynamics of 3D ABPs in bulk.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+	    <div class="fragment" style="width:40%;
+					 margin-top:2%;
+					 margin-left:2%;
+					 border-width:2px;
+					 border-style:solid;
+					 border-color:black;">
+	      <p style="display:inline;">The mean squared displacement (MSD) matches the theoretical predictions [8].
+		In the dilute regime $(\phi_P = 0.004)$:
+	      </p>
+	      <img class="zoomR" style="bottom: 2%;
+			  width: 100%;
+			  margin-top: 2%;" data-src="media/msd.png">
+	      <p style="white-space: pre-line;
+			font-size:0.9em;">\[D^\text{eff}_t=D^0_t + \frac{f_p^2}{d(d-1)\alpha_t^2D_r}\]</p>
+	      
+	      <!-- <p>And for higher densities: -->
+	      <!-- </p> -->
+	      <!-- <img class="fragment" style="bottom: 2%; -->
+	      <!-- 		  width: 100%; -->
+	      <!-- 		  margin-top: 5%;" data-src="media/msd_dense.png"> -->
+	      
+	    </div>
+	    <div class="fragment" style="width:55%;
+			margin:2%;
+			margin-top:2%;">
+	      Higher density regimes were explored for different levels of activity. 
+	      <img class="zoomL" style="width:80%;
+					margin-top: 4%;" data-src="media/mips-PDF.png">
+	      <ul>
+		<li>A single peak matching the global density for low $ \phi_P $ - <b>dilute phase</b></li>
+		<li>Transition from a single peak to bimodal PDF as activity increases - <b>phase coexistence (MIPS) </b></li>
+	      </ul>
+	      
+	      <video style="
+			    position:absolute;
+			    width:50%;
+			    top:60%;
+			    left:25%;
+			    " controls="true" loop="true">
+		<source src="media/untitled.mp4" type="video/mp4" >
+	      </video>
+	    </div>
+
+	    <p style="color:gray;
+		      position:absolute;
+		      left:2%;
+		      bottom:10%;
+		      font-size:0.8em">
+	      \[
+	      \begin{align*}
+	      \phi_P &\text{ - Packing fraction} \\
+	      &\text{(density)}
+	      \end{align*}
+	      \]
+	      \[
+	      \begin{align*}
+	      \text{Pe} &\text{ - Péclet number} \\
+	      &\text{(activity)}
+	      \end{align*}
+	      \]
+	    </p>
+
+	  </div>
+
+	  
+	  <!-- References -->
+	  <ref>[8] J. Elgeti, R. G. Winkler, and G. Gompper. “Physics of microswimmers—single particle motion and collective behavior: a review”.
+	          In: Reports on progress in physics 78.5 (2015)</ref>
+
+	</section>
+
+	<!-- Slide 15 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Multiscale model for the cytoskeleton</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Study of the ABPs dynamics under rigid and spherical confinement.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+	    <div style="width:40%;
+			margin: 2%;
+			border-width:2px;
+			border-style:solid;
+			border-color:black;">
+	      <img class="zoomR" style="width: 90%;margin-top:5%;" data-src="media/msd-rc.svg">
+	      <p style="margin: 1.5%;
+			margin-top: 2%;
+			margin-bottom: 0%;">The MSD shows an initial ballistic regime and plateaus as the particles reach the potential wall.</p>
+	      
+	    </div>
+	    
+	    <div class="fragment" style="width:55%;
+			margin:2%;
+			margin-top:2%;">
+	      Higher density regimes were explored for different levels of activity. 
+	      <img class="zoomL" style="width:80%;
+					margin-top: 4%;" data-src="media/rc-PDF.svg">
+	      <ul>
+		<li>A single peak matching the global density for low $ \phi_P $ - <b>gas phase</b></li>
+		<li> Peak broadening and shift with increasing Pe - <b>accumulation at the boundary and layer formation </b></li>
+		<li> <b>Hexatic ordering</b> at the boundary at high $\phi_P$</li>
+	      </ul>
+
+	    <video style="position:absolute;
+					   width:40%;
+					   top:57%;
+					   left:28%;
+					   " controls="true" 
+		   <source src="media/rigid-confinement.mp4" type="video/mp4" >
+		   
+	    </div>
+	  </div>
+	    
+
+	  
+	  <!-- References -->
+	  <ref></ref>
+	</section>
+
+	<!-- Slide 15 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Multiscale model for the cytoskeleton</h4>
+	  	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center">Study of the ABPs dynamics under rigid and spherical confinement.</p>
+	  
+	  <div style="margin-top: 1%;display: flex;">
+	    <div style="width:55%;
+			margin: 2%;
+			border-width:2px;
+			border-style:solid;
+			border-color:black;">
+	      <p style="margin: 1.5%;
+			margin-top: 2%;
+			margin-bottom: 0%;">Membrane deformations are quantified via the <i>roughness</i>:
+	      <p style="white-space: pre-line;
+			font-size:0.9em;">\[ \mathcal{R} = \frac{\sqrt{\text{Var(r(t))}}}{\left< r(t) \right> }  \]</p>
+	      </p>
+	      
+	      <img class="zoomR" style="width: 90%;margin-top:1%;" data-src="media/roughness.svg">
+	      <p style="margin:2%;">A larger repulsion force coefficient results in larger deformations for high Pe.</p>
+	      
+	    </div>
+	    
+	    <div class="fragment" style="width:45%;
+			margin:2%;
+			margin-top:2%;">
+	      <p>The local density PDF was studied for the high deformation regime:</p>
+	      <img class="zoomL" style="width:55%;
+					margin-top: 4%;" data-src="media/PF-PDF.svg">
+	      <ul>
+		<li>A sharp peak for low Pe - <b>nearly uniform accumulation at the boundary</b></li>
+		<li>Broad peak for high Pe - <b>coexistence of regions with different densities</b></li>
+	      </ul>
+
+	      	    <video style="position:absolute;
+					   width:45%;
+					   top:70%;
+					   left:30%;
+					   " controls="true" 
+		   <source src="media/phase-field.mp4" type="video/mp4" >
+		   
+	    </div>
+
+	  </div>
+	  <!-- References -->
+	  <ref></ref>
+	</section>
+
+	<!-- Next steps -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Future Work</h4>
+	  <p style="margin:0.5em;
+		    font-size:1.3em;
+		    " align="center"></p>
+
+	  <div style="margin-top: 8%;text-align:left; margin-left:5%">
+
+	    <video style="position:absolute;
+			  top:30%;
+			  left:50%;" height="400px" autoplay="True" loop="True" muted="True" controls="True">
+	      <source src="media/final-video.mp4" type="video/mp4" autoplay="True" loop="True" muted="True" controls="True">
+	    </video>
+	    
+	    <p style="margin-top:5%;
+		      font-size:1.3em;">Nuclear deformations on microgroove substrates</p>
+	    <ul>
+	      <li>Address reviewer critics</li>
+	      <li>Quantify nucleus rigidity in way that is comparable to experimental values</li>
+	    </ul>
+	    
+	    <p style="margin-top:5%;
+		      font-size:1.3em"> Pitting of the malaria parasite</p>
+	    <ul>
+	      <li>Convert simulation parameters to experimental values</li>
+	      <li>Conduct experiments to verify simulation results</li>
+	    </ul>
+
+	    <p style="margin-top:5%;
+		      font-size:1.3em">Multiscale model for the cytoskeleton</p>
+	    <ul>
+	      <li style="white-space: pre-line;">Expand current analyses (e.g. larger system sizes, of
+		cluster formation/dissolution dynamics)</li>
+	      <li>Introduce active filaments</li>
+	    </ul>
+	  </div>	
+	</section>
+
+
+	<!-- Final Slide -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <h4 style="top 0">Acknowledgements</h4>
+	  
+	  <div style="width=100%">
+	    <img data-src="media/europe.svg"/>
+	  </div>
+	</section>
+
+	<!-- Backup Slide 1 -->
+	<section style="height: 100%; margin-top: 0%;" >
+	  <div style="width:100%">
+	    <img style="width:80%" data-src="media/backup_grooves.jpg"/>
+	  </div>
+	</section>
+
+
+	</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/@explorables/horde_of_the_flies"></script>
+	<script src="math/math.js"></script>
+	<script src="dist/reveal.js"></script>
+	<script>
+	  Reveal.initialize({
+	      // The "normal" size of the presentation, aspect ratio will
+	      // be preserved when the presentation is scaled to fit different
+	      // resolutions. Can be specified using percentage units.
+	      //width: "1920",
+	      //height: "1080",
+
+	      // Factor of the display size that should remain empty around
+	      // the content
+	      margin: 0.04,
+
+	      // Bounds for smallest/largest possible scale to apply to content
+	      minScale: 0.2,
+	      maxScale: 2.0,
+
+	      controls: false,
+	      
+	      slideNumber: (slide) => {
+		  return [Reveal.getIndices(slide).h];
+	      },
+	      
+	      mathjax2: {
+		  // config: 'TeX-AMS_HTML-full',
+		  TeX: {
+		      Macros: {
+			  R: '\\mathbb{R}',
+			  set: [ '\\left\\{#1 \\; ; \\; #2\\right\\}', 2 ]
+		      }
+		  }
+	      },
+	      
+	      plugins: [ RevealMath.MathJax2 ]
+	  });
+
+	  // for the explorable container
+	  horde_of_the_flies.load("explorable_container")
+	  
+	</script>
+
+  </body>
+</html>
